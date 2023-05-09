@@ -1,6 +1,6 @@
-import { createApp } from "vue";
+import {createApp} from "vue";
 
-import "./index.scss";
+import "./index.css";
 
 import App from "./App.vue";
 import Main from './Main.vue'

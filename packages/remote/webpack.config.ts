@@ -1,10 +1,14 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
-const { VueLoaderPlugin } = require("vue-loader");
+// @ts-ignore
+import HtmlWebPackPlugin from "html-webpack-plugin";
+import {container} from "webpack";
+import { VueLoaderPlugin } from "vue-loader";
+import pkg from './package.json'
 
-module.exports = (_, argv) => ({
+const {ModuleFederationPlugin} = container
+
+export default () => ({
   output: {
-    publicPath: "http://localhost:8080/",
+    publicPath: "http://localhost:8081/",
   },
 
   resolve: {
@@ -12,7 +16,7 @@ module.exports = (_, argv) => ({
   },
 
   devServer: {
-    port: 8080,
+    port: 8081,
     historyApiFallback: true,
   },
 
@@ -25,7 +29,6 @@ module.exports = (_, argv) => ({
       {
         test: /\.tsx?$/,
         use: [
-          "babel-loader",
           {
             loader: "ts-loader",
             options: {
@@ -46,13 +49,13 @@ module.exports = (_, argv) => ({
   plugins: [
     new VueLoaderPlugin(),
     new ModuleFederationPlugin({
-      name: "host",
+      name: "remote",
       filename: "remoteEntry.js",
-      remotes: {
-        remote: "remote@http://localhost:8081/remoteEntry.js"
+      remotes: {},
+      exposes: {
+        './Header': './src/Header.vue'
       },
-      exposes: {},
-      shared: require("./package.json").dependencies,
+      shared: pkg.dependencies,
     }),
     new HtmlWebPackPlugin({
       template: "./src/index.html",
