@@ -9,3 +9,9 @@
     <router-link class="mx-5" to="/" active-class="underline">Main</router-link>
 </div>
 </template>
+
+<style lang="css">
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+</style>

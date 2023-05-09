@@ -3,7 +3,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 import Main from "./Main.vue";
 import About from "./About.vue";
 
-import "./index.scss";
+import "./index.css";
 
 import App from "./App.vue";
 
